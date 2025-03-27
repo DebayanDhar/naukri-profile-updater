@@ -35,12 +35,21 @@ try:
     driver.get("https://www.naukri.com/mnjuser/profile")
 
     # Step 2: Log in
-    time.sleep(3)
-    driver.find_element(By.ID, "usernameField").send_keys(NAUKRI_EMAIL)
-    driver.find_element(By.ID, "passwordField").send_keys(NAUKRI_PASSWORD)
-    driver.find_element(By.XPATH, "//button[contains(text(), 'Login')]").click()
+    # ✅ Explicit Wait: Wait for the email field to be visible
+    wait = WebDriverWait(driver, 10)  
+    email_field = wait.until(EC.presence_of_element_located((By.ID, "usernameField")))
+    email_field.send_keys("your_email@example.com")  
+    print("✅ Email entered successfully!")
 
-    time.sleep(5)  # Wait for page to load
+    # ✅ Explicit Wait: Wait for the password field
+    password_field = wait.until(EC.presence_of_element_located((By.ID, "passwordField")))
+    password_field.send_keys("your_password_here")  
+    print("✅ Password entered successfully!")
+
+    # ✅ Explicit Wait: Wait for login button and click it
+    login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Login')]")))
+    login_button.click()
+    print("✅ Logged in successfully!")
 
     # Step 3: Navigate to Profile Update Section
     driver.get("https://www.naukri.com/mnjuser/profile/edit")
