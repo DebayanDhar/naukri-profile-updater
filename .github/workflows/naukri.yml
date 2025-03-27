@@ -1,0 +1,28 @@
+name: Update Naukri Profile
+
+on:
+  schedule:
+    - cron: "0 9-22 * * *"  # Runs every hour from 9 AM to 10 PM
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: pip install selenium webdriver-manager python-dotenv
+
+      - name: Set Environment Variables
+        run: |
+          echo "NAUKRI_EMAIL=${{ secrets.NAUKRI_EMAIL }}" >> $GITHUB_ENV
+          echo "NAUKRI_PASSWORD=${{ secrets.NAUKRI_PASSWORD }}" >> $GITHUB_ENV
+
+      - name: Run the script
+        run: python update_naukri.py
