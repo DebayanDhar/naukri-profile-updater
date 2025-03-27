@@ -28,7 +28,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")  # Fix shared memory issu
 
 # Start WebDriver
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service , options=chrome_options)
 
 try:
     # Step 1: Open Naukri Login Page
