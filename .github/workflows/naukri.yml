@@ -1,6 +1,7 @@
 name: Update Naukri Profile
 
 on:
+  workflow_dispatch:  # Add this to allow manual runs
   schedule:
     - cron: "0 9-22 * * *"  # Runs every hour from 9 AM to 10 PM
 
