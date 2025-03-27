@@ -1,11 +1,13 @@
 import time
-import random
+import os
+import tempfile
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-import os
+from selenium.webdriver.chrome.options import Options
+
 
 # Fetch credentials from environment variables set in GitHub Secrets
 NAUKRI_EMAIL = os.getenv("NAUKRI_EMAIL")
@@ -14,6 +16,15 @@ NAUKRI_PASSWORD = os.getenv("NAUKRI_PASSWORD")
 # Check if credentials are retrieved correctly (for debugging)
 if not NAUKRI_EMAIL or not NAUKRI_PASSWORD:
     raise ValueError("Missing Naukri credentials! Check your GitHub Secrets.")
+
+# Create a new temporary Chrome profile directory
+profile_dir = tempfile.mkdtemp()
+
+chrome_options = Options()
+chrome_options.add_argument(f"--user-data-dir={profile_dir}")  # Use a unique profile
+chrome_options.add_argument("--headless")  # Run in headless mode for GitHub Actions
+chrome_options.add_argument("--no-sandbox")  # Needed for Linux-based runners
+chrome_options.add_argument("--disable-dev-shm-usage")  # Fix shared memory issues
 
 # Start WebDriver
 service = Service(ChromeDriverManager().install())
