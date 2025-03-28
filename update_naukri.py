@@ -41,12 +41,12 @@ try:
     wait = WebDriverWait(driver, 10)  
     wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
     email_field = wait.until(EC.presence_of_element_located((By.ID, "usernameField")))
-    email_field.send_keys("your_email@example.com")  
+    email_field.send_keys(NAUKRI_EMAIL)  
     print("✅ Email entered successfully!")
 
     # ✅ Explicit Wait: Wait for the password field
     password_field = wait.until(EC.presence_of_element_located((By.ID, "passwordField")))
-    password_field.send_keys("your_password_here")  
+    password_field.send_keys(NAUKRI_PASSWORD)  
     print("✅ Password entered successfully!")
 
     # ✅ Explicit Wait: Wait for login button and click it
