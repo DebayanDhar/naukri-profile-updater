@@ -38,7 +38,7 @@ try:
 
     # Step 2: Log in
     # ✅ Explicit Wait: Wait for the email field to be visible
-    wait = WebDriverWait(driver, 10)  
+    wait = WebDriverWait(driver, 20)  
     wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
     email_field = wait.until(EC.presence_of_element_located((By.ID, "usernameField")))
     email_field.send_keys(NAUKRI_EMAIL)  
