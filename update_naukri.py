@@ -3,8 +3,6 @@ import os
 import tempfile
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -37,22 +35,12 @@ try:
     driver.get("https://www.naukri.com/mnjuser/profile")
 
     # Step 2: Log in
-    # ✅ Explicit Wait: Wait for the email field to be visible
-    wait = WebDriverWait(driver, 20)  
-    wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-    email_field = wait.until(EC.presence_of_element_located((By.ID, "usernameField")))
-    email_field.send_keys(NAUKRI_EMAIL)  
-    print("✅ Email entered successfully!")
+    time.sleep(20)
+    driver.find_element(By.ID, "usernameField").send_keys(NAUKRI_EMAIL)
+    driver.find_element(By.ID, "passwordField").send_keys(NAUKRI_PASSWORD)
+    driver.find_element(By.XPATH, "//button[contains(text(), 'Login')]").click()
 
-    # ✅ Explicit Wait: Wait for the password field
-    password_field = wait.until(EC.presence_of_element_located((By.ID, "passwordField")))
-    password_field.send_keys(NAUKRI_PASSWORD)  
-    print("✅ Password entered successfully!")
-
-    # ✅ Explicit Wait: Wait for login button and click it
-    login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Login')]")))
-    login_button.click()
-    print("✅ Logged in successfully!")
+    time.sleep(5)  # Wait for page to load
 
     # Step 3: Navigate to Profile Update Section
     driver.get("https://www.naukri.com/mnjuser/profile/edit")
